@@ -21,23 +21,25 @@ public class GlassRefraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Vector3 initialBulletVelocity;
-        Vector2 initialXZ;
-        Vector2 initialYZ;
-
-        Vector3 glassBulletVelocity;
-
-        Vector3 contactPoint;
-        Vector3 glassNormal;
-
-        float dotProd;
-        float thetaIn;
-        float phiIn;
-        float thetaOut;
-        float phiOut;
-
-        if (other.tag == "Bullet")
+       if (other.tag == "Bullet")
         {
+            Vector3 initialBulletVelocity;
+            Vector2 initialXZ;
+            Vector2 initialYZ;
+
+            Vector3 glassBulletVelocity;
+            Vector2 glassXZ;
+            Vector2 glassYZ;
+
+            Vector3 contactPoint;
+            Vector3 glassNormal;
+
+            float dotProd;
+            float thetaIn;
+            float phiIn;
+            float thetaOut;
+            float phiOut;
+
             initialBulletVelocity = other.GetComponent<Rigidbody>().velocity;
             initialXZ = new Vector2(initialBulletVelocity.x, initialBulletVelocity.z);
             initialYZ = new Vector2(initialBulletVelocity.y, initialBulletVelocity.z);
@@ -60,19 +62,25 @@ public class GlassRefraction : MonoBehaviour
             dotProd = -initialBulletVelocity.z * glassNormal.z;
             thetaIn = Mathf.Acos((dotProd) / (initialXZ.magnitude));
             phiIn = Mathf.Acos((dotProd) / (initialYZ.magnitude));
-            Debug.Log("Theta In: " + thetaIn * Mathf.Rad2Deg);
-            Debug.Log("Phi In: " + phiIn * Mathf.Rad2Deg);
+            Debug.Log("Theta In: " + thetaIn * Mathf.Rad2Deg + ", Phi In: " + phiIn * Mathf.Rad2Deg);
+            
 
             thetaOut = Mathf.Acos(Mathf.Sin(thetaIn / glassRefractionIndex));
             phiOut = Mathf.Acos(Mathf.Sin(phiIn / glassRefractionIndex));
 
+           
+            glassBulletVelocity = new Vector3(Mathf.Sin(thetaOut) * initialXZ.magnitude, Mathf.Sin(phiOut) * initialXZ.magnitude, Mathf.Cos(thetaOut) * initialXZ.magnitude);
+            other.GetComponent<Rigidbody>().velocity = glassBulletVelocity;
+       }
+    }
 
-
-
-            //Take Velocity
-            //Calculate Theta
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Bullet")
+        {
+            other.GetComponent<Bullet>().ExitGlass();
         }
     }
 
-   
+
 }

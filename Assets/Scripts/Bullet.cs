@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody rb;
     public int maxBounces = 6;
     private int numBounces = 0;
+    private Vector3 initialVelocity;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +25,15 @@ public class Bullet : MonoBehaviour
         
     }
 
+    public void ExitGlass()
+    {
+        rb.velocity = initialVelocity;
+    }
     public void Vel(Vector3 vel)
     {
         rb = GetComponent<Rigidbody>();
         rb.AddForce(vel);
+        initialVelocity = vel;
     }
 
     private void OnCollisionEnter(Collision collision)
