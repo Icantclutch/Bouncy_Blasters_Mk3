@@ -78,7 +78,7 @@ public class GlassRefraction : MonoBehaviour
     {
         if(other.tag == "Bullet")
         {
-            other.GetComponent<Bullet>().ExitGlass();
+            //other.GetComponent<Bullet>().ExitGlass();
         }
     }
 
