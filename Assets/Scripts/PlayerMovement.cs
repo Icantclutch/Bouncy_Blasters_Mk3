@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
 	private Rigidbody rbody;
 	private CapsuleCollider coll;
@@ -24,9 +25,12 @@ public class PlayerMovement : MonoBehaviour
 		rbody.freezeRotation = true;
 		rbody.useGravity = false;
 	}
-
+	
+	[Client]
 	void FixedUpdate()
 	{
+		if (!hasAuthority)
+            return;
 		if (grounded)
 		{
 			// Calculate how fast we should be moving
@@ -66,4 +70,5 @@ public class PlayerMovement : MonoBehaviour
 		// for the character to reach at the apex.
 		return Mathf.Sqrt(2 * jumpHeight * gravity);
 	}
+
 }

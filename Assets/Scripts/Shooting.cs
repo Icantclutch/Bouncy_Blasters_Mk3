@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Shooting : MonoBehaviour
+public class Shooting : NetworkBehaviour
 {
     [System.Serializable]
     public class WeaponSlot {
@@ -26,8 +27,11 @@ public class Shooting : MonoBehaviour
     public bool currentlyFiring = false;
 
     // Update is called once per frame
+    [Client]
     void Update()
     {
+        if (!hasAuthority)
+            return;
         //Loop through any existing weapons to tick down cooldowns
         foreach(WeaponSlot w in playerWeapons)
         {
