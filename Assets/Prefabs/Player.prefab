@@ -183,7 +183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 84335f003ad8f42408d13787e76d4f94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -234,8 +234,13 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   eyes: {fileID: 4357171599887525653}
-  bullet: {fileID: 0}
-  speed: 18
+  currentWeapon: 1
+  playerWeapons:
+  - weapon: {fileID: 11400000, guid: 9b35180f2f1d02a4bbf668420a4a891c, type: 2}
+    currentFiringMode: 1
+    currentAmmo: 100
+    currentCooldown: 1
+  currentlyFiring: 0
 --- !u!114 &4357171600822209691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +256,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   speed: 10
+  gravity: 10
+  maxVelocityChange: 10
+  canJump: 1
+  jumpHeight: 2
 --- !u!114 &4357171600822209693
 MonoBehaviour:
   m_ObjectHideFlags: 0
